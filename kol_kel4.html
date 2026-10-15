@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentasi Koloid — Kelompok 4</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b1110; --panel: #131c1a; --accent: #43d6a0; --muted: #aabbb5;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(ellipse at top, #17302a 0%, var(--bg) 60%); color: #f4faf7;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; min-height: 100vh; }
+header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px clamp(12px,3vw,32px);
+  border-bottom:1px solid #263b35; background:rgba(8,15,13,.82); }
+.brand { font-weight:750; letter-spacing:.04em; }
+.brand small { display:block; color:var(--muted); font-weight:500; letter-spacing:0; margin-top:3px; }
+main { max-width: 1440px; margin:0 auto; padding: clamp(12px,2.5vw,28px); }
+.stage { display:flex; align-items:center; justify-content:center; min-height:50vh; }
+#slideImage { display:block; width:100%; height:auto; max-height:85vh; object-fit:contain; border-radius:10px;
+  box-shadow:0 18px 60px #0008; background:#000; }
+.controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px; padding:16px 0 10px; }
+button { border:1px solid #35574b; color:#f5fff9; background:var(--panel); border-radius:10px; padding:11px 17px;
+  font:inherit; cursor:pointer; transition:background .15s, transform .15s; }
+button:hover { background:#203d33; }
+button:active { transform:scale(.98); }
+button:disabled { opacity:.35; cursor:not-allowed; }
+button.primary { background:var(--accent); border-color:var(--accent); color:#05251a; font-weight:750; }
+.counter { color:var(--muted); min-width:95px; text-align:center; font-variant-numeric:tabular-nums; }
+.progress { height:4px; background:#1e302a; border-radius:99px; overflow:hidden; }
+#progressBar { height:100%; width:5%; background:var(--accent); transition:width .2s; }
+.help { text-align:center; color:var(--muted); font-size:.88rem; margin:12px 0 18px; }
+.thumbs { display:flex; gap:10px; overflow-x:auto; padding:8px 2px 14px; }
+.thumb { flex:0 0 128px; padding:4px; background:#101a17; border-color:#2d433b; }
+.thumb img { width:100%; display:block; border-radius:5px; }
+.thumb.active { border:2px solid var(--accent); padding:2px; }
+footer { text-align:center; color:#7f9990; padding:16px; font-size:.82rem; }
+@media(max-width:600px) {
+  header { align-items:flex-start; } .brand { font-size:.94rem; }
+  button { padding:10px 12px; } .thumb { flex-basis:92px; }
+  #slideImage { max-height:60vh; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">PRESENTASI KOLOID<small>Kelompok 4 · XII-1</small></div>
+  <button id="fullscreenBtn" type="button" title="Tampilkan layar penuh">⛶ Layar Kebek</button>
+</header>
+<main>
+  <div class="stage"><img id="slideImage" alt="Slide presentasi"></div>
+  <div class="progress" aria-label="Kemajuan presentasi"><div id="progressBar"></div></div>
+  <div class="controls">
+    <button id="firstBtn" type="button" aria-label="Slide pertama">|← Awal</button>
+    <button id="prevBtn" type="button">← Sebelumnya</button>
+    <span class="counter" id="counter" aria-live="polite">Slide 1 / 20</span>
+    <button id="nextBtn" class="primary" type="button">Berikutnya →</button>
+    <button id="lastBtn" type="button" aria-label="Slide terakhir">Akhir →|</button>
+  </div>
+  <p class="help">Ayok teman teman semangatt, pencet tombole kanggo pindah!</p>
+  <div class="thumbs" id="thumbs" aria-label="Pilih slide"></div>
+</main>
+<footer>Dibuat oleh Kelompok 4 yang selalu ceria</footer>
+<script>
+const slides = [
+"slide-01.jpg",
+"slide-02.jpg",
+"slide-03.jpg",
+"slide-04.jpg",
+"slide-05.jpg",
+"slide-06.jpg",
+"slide-07.jpg",
+"slide-08.jpg",
+"slide-09.jpg",
+"slide-10.jpg",
+"slide-11.jpg",
+"slide-12.jpg",
+"slide-13.jpg",
+"slide-14.jpg",
+"slide-15.jpg",
+"slide-16.jpg",
+"slide-17.jpg",
+"slide-18.jpg",
+"slide-19.jpg",
+"slide-20.jpg"
+];
+let current = 0;
+const image = document.getElementById('slideImage');
+const counter = document.getElementById('counter');
+const progress = document.getElementById('progressBar');
+const thumbs = document.getElementById('thumbs');
+const prev = document.getElementById('prevBtn');
+const next = document.getElementById('nextBtn');
+function showSlide(index) {
+  current = Math.max(0, Math.min(slides.length - 1, index));
+  image.src = slides[current];
+  image.alt = `Slide ${current + 1} dari ${slides.length}`;
+  counter.textContent = `Slide ${current + 1} / ${slides.length}`;
+  progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+  prev.disabled = current === 0;
+  next.disabled = current === slides.length - 1;
+  document.querySelectorAll('.thumb').forEach((el, i) => {
+    el.classList.toggle('active', i === current);
+    if (i === current) el.setAttribute('aria-current', 'true');
+    else el.removeAttribute('aria-current');
+  });
+  const active = thumbs.children[current];
+  if (active) active.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+}
+slides.forEach((src, i) => {
+  const button = document.createElement('button');
+  button.className = 'thumb';
+  button.type = 'button';
+  button.title = `Buka slide ${i + 1}`;
+  button.setAttribute('aria-label', `Buka slide ${i + 1}`);
+  const thumbImg = document.createElement('img');
+  thumbImg.src = src;
+  thumbImg.alt = '';
+  button.appendChild(thumbImg);
+  button.addEventListener('click', () => showSlide(i));
+  thumbs.appendChild(button);
+});
+prev.addEventListener('click', () => showSlide(current - 1));
+next.addEventListener('click', () => showSlide(current + 1));
+document.getElementById('firstBtn').addEventListener('click', () => showSlide(0));
+document.getElementById('lastBtn').addEventListener('click', () => showSlide(slides.length - 1));
+document.getElementById('fullscreenBtn').addEventListener('click', async () => {
+  try {
+    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+    else await document.exitFullscreen();
+  } catch (e) { alert('Mode layar penuh tidak didukung di browser ini.'); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); showSlide(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); showSlide(current - 1); }
+  if (e.key === 'Home') showSlide(0);
+  if (e.key === 'End') showSlide(slides.length - 1);
+});
+showSlide(0);
+</script>
+</body>
+</html>
