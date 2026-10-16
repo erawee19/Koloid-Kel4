@@ -18,7 +18,7 @@ header { display:flex; align-items:center; justify-content:space-between; gap:12
 .brand small { display:block; color:var(--muted); font-weight:500; letter-spacing:0; margin-top:3px; }
 main { max-width: 1440px; margin:0 auto; padding: clamp(12px,2.5vw,28px); }
 .stage { display:flex; align-items:center; justify-content:center; min-height:50vh; }
-#slideImage { display:block; width:100%; height:auto; max-height:85vh; object-fit:contain; border-radius:10px;
+#slideImage { display:block; width:100%; height:auto; max-height:85vh; object-fit:contain; border-radius:20px;
   box-shadow:0 18px 60px #0008; background:#000; }
 .controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px; padding:16px 0 10px; }
 button { border:1px solid #35574b; color:#f5fff9; background:var(--panel); border-radius:10px; padding:11px 17px;
@@ -39,29 +39,29 @@ footer { text-align:center; color:#7f9990; padding:16px; font-size:.82rem; }
 @media(max-width:600px) {
   header { align-items:flex-start; } .brand { font-size:.94rem; }
   button { padding:10px 12px; } .thumb { flex-basis:92px; }
-  #slideImage { max-height:60vh; }
+  #slideImage { max-height:100vh; }
 }
 </style>
 </head>
 <body>
 <header>
   <div class="brand">PRESENTASI KOLOID<small>Kelompok 4 · XII-1</small></div>
-  <button id="fullscreenBtn" type="button" title="Tampilkan layar penuh">⛶ Layar Kebek</button>
+  <button id="fullscreenBtn" type="button" title="Tampilkan layar penuh">⛶ Layar FULL bro</button>
 </header>
 <main>
   <div class="stage"><img id="slideImage" alt="Slide presentasi"></div>
   <div class="progress" aria-label="Kemajuan presentasi"><div id="progressBar"></div></div>
   <div class="controls">
     <button id="firstBtn" type="button" aria-label="Slide pertama">|← Awal</button>
-    <button id="prevBtn" type="button">← Sebelumnya</button>
+    <button id="prevBtn" type="button">← SEBELUMNYA</button>
     <span class="counter" id="counter" aria-live="polite">Slide 1 / 20</span>
-    <button id="nextBtn" class="primary" type="button">Berikutnya →</button>
+    <button id="nextBtn" class="primary" type="button">BERIKUTNYA →</button>
     <button id="lastBtn" type="button" aria-label="Slide terakhir">Akhir →|</button>
   </div>
-  <p class="help">Ayok teman teman semangatt, pencet tombole kanggo pindah!</p>
+  <p class="help">Ayok teman teman semangatt, pencet tombol BERIKUTNYA kangge pindah nggih!</p>
   <div class="thumbs" id="thumbs" aria-label="Pilih slide"></div>
 </main>
-<footer>Dibuat oleh Kelompok 4 yang selalu ceria</footer>
+<footer>Dibuat oleh Kelompok 4 yang selalu CERIA dan BAHAGIA!!</footer>
 <script>
 const slides = [
 "slide-01.jpg",
